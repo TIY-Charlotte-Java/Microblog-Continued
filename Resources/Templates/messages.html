@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body>
+<form action="/message" method="post">
+    <input type="text" placeholder="Enter a message" name="message"/>
+    <button type="submit">Post</button>
+</form>
+Messages from {{user.name}}:
+<ul>
+    {{#user.posts}}
+    <li>{{.}}</li>
+    {{/user.posts}}
+</ul>
+</body>
+</html>
