@@ -1,5 +1,13 @@
 # Microblog Continued
 
+Let's talk about continuing our Microblog solution.
+
+But first, enjoy this gif of someone cooking what looks like salmon on a Pentium 4:
+
+![salmonchip](http://i.giphy.com/HwU6KgJQvKi1W.gif)
+
+Now, on to our assignment..
+
 ## Description
 
 Add functionality to your microblog.
