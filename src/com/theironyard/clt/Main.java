@@ -1,29 +1,35 @@
 package com.theironyard.clt;
 
 import spark.ModelAndView;
+import spark.Session;
 import spark.Spark;
 import spark.template.mustache.MustacheTemplateEngine;
 
 import java.util.HashMap;
 
 public class Main {
-    static HashMap<String , User> user = new HashMap<>();
+    static HashMap<String , User> users = new HashMap<>();
 
-    static String name;
+
     public static void main(String[] args) {
-
-
         Spark.init();
 
         Spark.get(
                 "/",
                 ((request, response) -> {
-                    if (name == null) {
-                        return new ModelAndView(user, "login.html");
-                    } else {
-                        user.put(name, new User(name));
-                        return new ModelAndView(user, "messages.html");
-                    }
+                    // get userName from session
+                    
+                    // get user from users
+
+                    // if the user is null, render login
+                    // else render messages with user
+
+//                    if (name == null) {
+//                        return new ModelAndView(user, "login.html");
+//                    } else {
+//                        user.put(name, new User(name));
+//                        return new ModelAndView(user, "messages.html");
+//                    }
                 }),
                 new MustacheTemplateEngine()
         );
@@ -31,17 +37,26 @@ public class Main {
         Spark.post(
                 "/login",
                 ((request, response) -> {
-                    name = request.queryParams("loginName");
-                    String attempt = request.queryParams("loginPassword");
-                    User newUser = new User(name);
-                    if (newUser.password.equals(attempt)) {
-                        user.put(name ,newUser);
+                    Session session = request.session();
+
+                    // set the current session's username to what we pass in.
+                    String name = request.queryParams("loginName");
+                    String password = request.queryParams("loginPassword");
+
+                    // if the password is the user's password, then
+                    // save user to session
+                    User currentUser = users.containsKey(name) ?
+                            users.get(name) :
+                            new User(name);
+
+                    if (password.equals(currentUser.password)) {
+                        users.put(name, currentUser);
+                        session.attribute("userName", name);
                         response.redirect("/");
                         return "";
                     } else {
                         return "invalid password ya git!";
                     }
-
                 })
         );
 
@@ -50,6 +65,10 @@ public class Main {
         Spark.post(
                 "/message",
                 ((request, response) -> {
+                    // get userName from session
+                    // get user from users
+                    // if user is not null, add to users messages
+                    // redirect to root
                     String message = request.queryParams("message");
                     user.get(name).posts.add(message);
                     response.redirect("/");
