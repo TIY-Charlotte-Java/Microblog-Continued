@@ -18,11 +18,10 @@ public class Main {
         Spark.get(
                 "/",
                 ((request, response) -> {
-
                     if (name == null) {
                         return new ModelAndView(user, "login.html");
                     } else {
-                        user.put("user", new User(name));
+                        user.put(name, new User(name));
                         return new ModelAndView(user, "messages.html");
                     }
                 }),
@@ -59,14 +58,14 @@ public class Main {
 
         );
 
-        Spark.post(
-                "/message",
-                ((request, response) -> {
-                    Integer delete = Integer.valueOf(request.queryParams("choice"));
-                    user.get(name).posts.remove(delete);
-                    response.redirect("/");
-                    return "";
-                })
-        );
+//        Spark.post(
+//                "/message",
+//                ((request, response) -> {
+//                    Integer delete = Integer.valueOf(request.queryParams("choice"));
+//                    user.get(name).posts.remove(delete);
+//                    response.redirect("/");
+//                    return "";
+//                })
+//        );
     }
 }
