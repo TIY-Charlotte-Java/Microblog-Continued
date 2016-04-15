@@ -7,8 +7,7 @@ import spark.template.mustache.MustacheTemplateEngine;
 import java.util.HashMap;
 
 public class Main {
-
-    static User user;
+    static HashMap<String , User> user = new HashMap<>();
 
 
     public static void main(String[] args) {
@@ -35,7 +34,7 @@ public class Main {
                     String attempt = request.queryParams("loginPassword");
                     User newUser = new User(name);
                     if (newUser.password.equals(attempt)) {
-                        user = newUser;
+                        user.put(name ,newUser);
                         response.redirect("/");
                         return "";
                     } else {
@@ -51,7 +50,7 @@ public class Main {
                 "/message",
                 ((request, response) -> {
                     String message = request.queryParams("message");
-                    user.posts.add(message);
+                    user.get().add(message);
                     response.redirect("/");
                     return "";
                 })
