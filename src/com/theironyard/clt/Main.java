@@ -9,8 +9,10 @@ import java.util.HashMap;
 public class Main {
     static HashMap<String , User> user = new HashMap<>();
 
-
+    static String name;
     public static void main(String[] args) {
+
+
         Spark.init();
 
         Spark.get(
@@ -30,7 +32,7 @@ public class Main {
         Spark.post(
                 "/login",
                 ((request, response) -> {
-                    String name = request.queryParams("loginName");
+                    name = request.queryParams("loginName");
                     String attempt = request.queryParams("loginPassword");
                     User newUser = new User(name);
                     if (newUser.password.equals(attempt)) {
@@ -50,7 +52,18 @@ public class Main {
                 "/message",
                 ((request, response) -> {
                     String message = request.queryParams("message");
-                    user.get().add(message);
+                    user.get(name).posts.add(message);
+                    response.redirect("/");
+                    return "";
+                })
+
+        );
+
+        Spark.post(
+                "/message",
+                ((request, response) -> {
+                    Integer delete = Integer.valueOf(request.queryParams("choice"));
+                    user.get(name).posts.remove(delete);
                     response.redirect("/");
                     return "";
                 })
