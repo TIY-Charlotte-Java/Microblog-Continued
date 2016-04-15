@@ -18,12 +18,12 @@ public class Main {
         Spark.get(
                 "/",
                 ((request, response) -> {
-                    HashMap m = new HashMap();
-                    if (user == null) {
-                        return new ModelAndView(m, "login.html");
+
+                    if (name == null) {
+                        return new ModelAndView(user, "login.html");
                     } else {
-                        m.put("user", user);
-                        return new ModelAndView(m, "messages.html");
+                        user.put("user", new User(name));
+                        return new ModelAndView(user, "messages.html");
                     }
                 }),
                 new MustacheTemplateEngine()
