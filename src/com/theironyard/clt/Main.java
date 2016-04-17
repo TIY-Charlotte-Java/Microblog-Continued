@@ -95,6 +95,7 @@ public class Main {
         File f = new File("messages.txt");
         FileWriter fw = new FileWriter("messages.txt");
 
-        fw.write(message);
+        fw.write(users.get("userName").posts.toString());
+        fw.append(users.get("userName").posts.toString());
     }
 }
