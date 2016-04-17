@@ -28,7 +28,7 @@ public class Main {
                     // if the user is null, render login
                     // else render messages with user
 
-                    if (userName == null) {
+                    if (users.get(userName) == null) {
                         users.put(userName, new User(userName));
                         return new ModelAndView(userName, "login.html");
                     } else {
