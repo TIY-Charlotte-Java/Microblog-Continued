@@ -11,7 +11,7 @@ public class Main {
     static HashMap<String , User> users = new HashMap<>();
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NullPointerException {
         Spark.init();
 
         Spark.get(
@@ -74,11 +74,12 @@ public class Main {
                     // if user is not null, add to users messages
                     // redirect to root
                     String message = request.queryParams("message");
-                    users.get("userName").posts.add(message);
-                    response.redirect("/");
+                    users.get(userName).posts.add(message);
                     Integer delete = Integer.valueOf(request.queryParams("choice"));
                     users.get(userName).posts.remove(delete);
                     response.redirect("/");
+                    
+
                     return "";
                 })
 
