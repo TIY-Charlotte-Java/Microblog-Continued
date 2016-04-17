@@ -5,13 +5,16 @@ import spark.Session;
 import spark.Spark;
 import spark.template.mustache.MustacheTemplateEngine;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Main {
     static HashMap<String , User> users = new HashMap<>();
 
 
-    public static void main(String[] args) throws NullPointerException {
+    public static void main(String[] args) throws IOException{
         Spark.init();
 
         Spark.get(
@@ -89,12 +92,9 @@ public class Main {
 
         );
 
-//        Spark.post(
-//                "/message",
-//                ((request, response) -> {
-//
-//                    return "";
-//                })
-//        );
+        File f = new File("messages.txt");
+        FileWriter fw = new FileWriter("messages.txt");
+
+        fw.write(message);
     }
 }
