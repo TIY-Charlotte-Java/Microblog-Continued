@@ -68,11 +68,16 @@ public class Main {
                 "/message",
                 ((request, response) -> {
                     // get userName from session
+                    Session session = request.session();
                     // get user from users
+                    String userName = session.attribute("userName");
                     // if user is not null, add to users messages
                     // redirect to root
                     String message = request.queryParams("message");
                     users.get("userName").posts.add(message);
+                    response.redirect("/");
+                    Integer delete = Integer.valueOf(request.queryParams("choice"));
+                    users.get(userName).posts.remove(delete);
                     response.redirect("/");
                     return "";
                 })
@@ -82,9 +87,7 @@ public class Main {
 //        Spark.post(
 //                "/message",
 //                ((request, response) -> {
-//                    Integer delete = Integer.valueOf(request.queryParams("choice"));
-//                    user.get(name).posts.remove(delete);
-//                    response.redirect("/");
+//
 //                    return "";
 //                })
 //        );
