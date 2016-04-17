@@ -77,8 +77,12 @@ public class Main {
                     users.get(userName).posts.add(message);
                     Integer delete = Integer.valueOf(request.queryParams("choice"));
                     users.get(userName).posts.remove(delete);
+                    String edit = request.queryParams("edits");
+                    Integer num = Integer.valueOf(request.queryParams("editsNumber"));
+                    users.get(userName).posts.remove(num);
+                    users.get(userName).posts.add(num, edit);
                     response.redirect("/");
-                    
+
 
                     return "";
                 })
