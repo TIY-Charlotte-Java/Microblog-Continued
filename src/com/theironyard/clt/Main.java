@@ -17,19 +17,21 @@ public class Main {
         Spark.get(
                 "/",
                 ((request, response) -> {
+                    Session session = request.session();
                     // get userName from session
-                    
+                    String userName = session.attribute("userName");
                     // get user from users
-
+                    users.get(userName);
                     // if the user is null, render login
                     // else render messages with user
 
-//                    if (name == null) {
-//                        return new ModelAndView(user, "login.html");
-//                    } else {
-//                        user.put(name, new User(name));
-//                        return new ModelAndView(user, "messages.html");
-//                    }
+                    if (userName == null) {
+                        users.put(userName, new User(userName));
+                        return new ModelAndView(userName, "login.html");
+                    } else {
+
+                        return new ModelAndView(userName, "messages.html");
+                    }
                 }),
                 new MustacheTemplateEngine()
         );
@@ -70,7 +72,7 @@ public class Main {
                     // if user is not null, add to users messages
                     // redirect to root
                     String message = request.queryParams("message");
-                    user.get(name).posts.add(message);
+                    users.get("userName").posts.add(message);
                     response.redirect("/");
                     return "";
                 })
