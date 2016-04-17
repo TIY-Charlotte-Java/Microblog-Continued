@@ -45,18 +45,18 @@ public class Main {
                     Session session = request.session();
 
                     // set the current session's username to what we pass in.
-                    String name = request.queryParams("loginName");
+                    String userName = request.queryParams("loginName");
                     String password = request.queryParams("loginPassword");
 
                     // if the password is the user's password, then
                     // save user to session
-                    User currentUser = users.containsKey(name) ?
-                            users.get(name) :
-                            new User(name);
+                    User currentUser = users.containsKey(userName) ?
+                            users.get(userName) :
+                            new User(userName);
 
                     if (password.equals(currentUser.password)) {
-                        users.put(name, currentUser);
-                        session.attribute("userName", name);
+                        users.put(userName, currentUser);
+                        session.attribute("userName", userName);
                         response.redirect("/");
                         return "";
                     } else {
@@ -93,7 +93,7 @@ public class Main {
         );
 
         File f = new File("messages.txt");
-        FileWriter fw = new FileWriter("messages.txt");
+        FileWriter fw = new FileWriter(f);
 
         fw.write(users.get("userName").posts.toString());
         fw.append(users.get("userName").posts.toString());
