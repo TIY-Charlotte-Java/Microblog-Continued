@@ -23,14 +23,16 @@ public class Main {
         Spark.get(
                 "/",
                 ((request, response) -> {
-                    HashMap users = new HashMap();
 
-                    Session session = request.session();
-                    String user = session.attribute("userName");
+
+                    Session context = request.session();
+                    //String user = session.attribute("userName");
                     // User user = users.get(userName);
 
-                    if (user == null) {
-                        return new ModelAndView(users, "index.html");
+                    HashMap users = new HashMap();
+
+                    if (context.attribute("userName") == null) {
+                        return new ModelAndView(users, "login.html");
                     } else {
                         users.put("name", user);
                         return new ModelAndView(users, "messages.html");
@@ -64,17 +66,23 @@ public class Main {
 //                    return "";
 //                })
 
-//                "/create-user",
-//                ((request, response) -> {
-//                    String name = request.queryParams("loginName");
-//                    response.redirect("/");
-//                    return "";
-//                })
+        Spark.post(
+                "/create-user",
+                ((request, response) -> {
+                    String name = request.queryParams("loginName");
+                    String password = request.queryParams()
+                    response.redirect("/");
+                    return "";
+                })
        );
 
         Spark.post(
                 "/create-message",
                 ((request, response) -> {
+                    Session session = request.session();
+                    String userName = session.attribute("userName);
+
+                    if (session.attribute("userName");
                     String messages = request.queryParams("messages");
                     users.messages.add(messages);
                     response.redirect("/");
